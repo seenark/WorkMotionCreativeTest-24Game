@@ -1,0 +1,14 @@
+@host=http://localhost:3000/game
+
+# valid
+GET {{host}}/2587
+
+GET {{host}}/4153
+GET {{host}}/1234
+GET {{host}}/6659
+GET {{host}}/7891
+
+# invalid 
+GET {{host}}/abcd
+GET {{host}}/abc
+GET {{host}}/abc7
