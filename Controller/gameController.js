@@ -14,7 +14,7 @@ exports.index = async (req, res) => {
     }else{
         const numberArr = numbers.split("")
         numberArr.forEach( value => {
-            if (isNaN(value)) {
+            if (isNaN(value) || value == '0') {
                 res.status(400).send("Please sent 4 integer ")
             }
         })

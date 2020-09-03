@@ -3,11 +3,132 @@
 <head>
   <title>Express</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
+ 
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+
+
+<style>
+  #app {
+    margin: 0 auto;
+    width: 960px;
+  }
+  input {
+    padding: 8px;
+    font-size: 1.2rem;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+
+  h2 {
+    widows: 240px;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 8px;
+    border-radius: 5px;
+  }
+
+  p {
+    padding: 8px;
+    text-align: center;
+    margin: 4px;
+    background-color: rgb(226, 226, 226);
+    border-radius: 5px;
+    font-size: 1.2rem;
+  }
+
+  button {
+    border-radius: 5px;
+    border: 1px solid white;
+    padding: 10px;
+    background-color: gray;
+    color: white;
+    
+  }
+
+  h3 {
+    text-align: center;
+    color: rgb(54, 54, 54);
+  }
+
+  h1 {
+    color: rgb(46, 46, 46);
+  }
+
+</style>
+
 </head>
 
 <body>
-  <h1>Express</h1>
-  <p>Welcome to Express</p>
+  <h1>Mathematics Game</h1>
+  <h3>Fill four number then click submit to check how to calculate these 4 number to 24</h3>
+  <div id="app">
+    <input type="number" max="9" min="1" v-model="n1">
+    <input type="number" max="9" min="1" v-model="n2">
+    <input type="number" max="9" min="1" v-model="n3">
+    <input type="number" max="9" min="1" v-model="n4">
+    <button @click="submit">Submit</button>
+
+    <h2 :style="solvedClass">{{solved}}</h2>
+    <div>
+      <div v-for="(item, index) in method" :key="index">
+        <p>{{index+1}}: {{item}}</p>
+      </div>
+    </div>
+  </div>
+  
+
+  <script>
+    var app = new Vue({
+      el:'#app',
+      data:{
+          n1:1,
+          n2:2,
+          n3:3,
+          n4:4,
+          canSolve:"",
+          method:[],
+
+        },
+        methods: {
+          submit() {
+            strNum = `${this.n1}${this.n2}${this.n3}${this.n4}`
+            axios({
+              method:'get',
+              url:'http://localhost:3000/game/' + strNum
+            }).then((resp) => {
+              this.canSolve = resp.data.result
+              this.method = resp.data.methods
+            })
+
+          }
+        },
+        computed: {
+          solved() {
+            if (this.canSolve == "YES") {
+              return "YES"
+            }else{
+              return "NO"
+            }
+          },
+          solvedClass() {
+            if (this.canSolve == "YES") {
+              return {
+                backgroundColor:'green',
+                color:'white'
+              }
+            }else{
+              return {
+                backgroundColor:'red',
+                color:'white'
+              }
+            }
+          }
+        },
+    })
+  </script>
+  
 </body>
 
 </html>
