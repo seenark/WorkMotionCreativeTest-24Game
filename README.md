@@ -6,7 +6,7 @@ API for check Result of 4 numbers can calculate it into 24?
 ``` npm install ```
 
 ## 2. Run
-``` npm run start
+``` npm run start ```
 
 ## 3. API info
 host: localhost
